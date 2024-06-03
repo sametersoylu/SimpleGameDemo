@@ -67,16 +67,18 @@ class Game {
 
                 Gorgon::Geometry::Pointf vector = (player.target - player.location);
 
-                if(vector.Distance() > 1) {
-                    vector = vector.Normalize() * player.speed * delta / 1000;
-                    player.location += vector;
-                } else {
-                    path.Erase(path.end() - 1);
+                if(player.location.Distance(player.target) <= 1) {
+                    path.Pop(); 
+                    return; 
                 }
+
+                player.location += (vector.Normalize() * player.speed * delta / 1000);
+
             });
 
         }); 
     }
+
 
     private:
     struct {
